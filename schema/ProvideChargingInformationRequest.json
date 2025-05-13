@@ -170,11 +170,11 @@
 			},
 			"additionalProperties": false
 		},
-		"H2TankInfo": {
+		"h2TankInfo": {
 			"description": "This type represents information regarding a H2 tank.",
 			"type": "object",
 			"properties": {
-				"H2TankStatus": {
+				"h2TankStatus": {
 					"description": "Condensed health status of the H2 tank.",
 					"type": "string",
 					"additionalProperties": false,
@@ -297,8 +297,8 @@
 				"tractionBatteryInfo": {
 					"$ref": "#/definitions/TractionBatteryInfo"
 				},
-				"H2TankInfo": {
-					"$ref": "#/definitions/H2TankInfo"
+				"h2TankInfo": {
+					"$ref": "#/definitions/h2TankInfo"
 				},
 				"vehicleStatusInfo": {
 					"$ref": "#/definitions/VehicleStatusInfo"
