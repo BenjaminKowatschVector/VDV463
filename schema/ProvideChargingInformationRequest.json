@@ -156,10 +156,38 @@
 				"temperature": {
 					"type": "integer",
 					"additionalProperties": false
+				},
+				"batteryStatus": {
+					"description": "Condensed health status of the traction battery.",
+					"type": "string",
+					"additionalProperties": false,
+					"enum": [						
+							"OK",
+							"NOK", 
+							"NA"
+					]
 				}
 			},
 			"additionalProperties": false
 		},
+		"h2TankInfo": {
+			"description": "This type represents information regarding a H2 tank.",
+			"type": "object",
+			"properties": {
+				"h2TankStatus": {
+					"description": "Condensed health status of the H2 tank.",
+					"type": "string",
+					"additionalProperties": false,
+					"enum": [						
+							"OK",
+							"NOK", 
+							"NA"
+					]
+				}
+			},
+			"additionalProperties": false
+		},
+
 		"VehicleStatusInfo": {
 			"description": "This type represents status information regarding a vehicle.",
 			"type": "object",
@@ -268,6 +296,9 @@
 				},
 				"tractionBatteryInfo": {
 					"$ref": "#/definitions/TractionBatteryInfo"
+				},
+				"h2TankInfo": {
+					"$ref": "#/definitions/h2TankInfo"
 				},
 				"vehicleStatusInfo": {
 					"$ref": "#/definitions/VehicleStatusInfo"
