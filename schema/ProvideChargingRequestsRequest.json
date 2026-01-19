@@ -12,13 +12,6 @@
         "$ref": "#/definitions/ChargingRequest"
       },
       "additionalProperties": false
-    },
-    "maintenanceRequestList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/MaintenanceRequest"
-      },
-      "additionalProperties": false
     }
   },
   "required": [
@@ -190,42 +183,6 @@
         "vehicleId",
         "chargingRequestId",
         "chargingRequestData"
-      ],
-      "additionalProperties": false
-    },
-    "MaintenanceRequest": {
-      "description": "This type represents a maintenance request.",
-      "type": "object",
-      "properties": {
-        "maintenanceRequestId": {
-          "$ref": "#/definitions/UniqueIdentifier"
-        },
-        "chargingPointId": {
-          "$ref": "#/definitions/UniqueIdentifier"
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date-time",
-          "additionalProperties": false
-        },
-        "endDate": {
-          "type": "string",
-          "format": "date-time",
-          "additionalProperties": false
-        },
-        "availability": {
-          "type": "string",
-          "additionalProperties": false,
-          "enum": [
-            "Unavailable",
-            "Available"
-          ]
-        }
-      },
-      "required": [
-        "maintenanceRequestId",
-        "chargingPointId",
-        "startDate"
       ],
       "additionalProperties": false
     }
