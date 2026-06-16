@@ -1,5 +1,5 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
+	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$id": "urn:VDV463:1:0:0:ProvideChargingInformationRequest",
 	"comment": "VDV463 1.0.0 FINAL",
 	"title": "ProvideChargingInformationRequest",
@@ -10,8 +10,13 @@
 			"type": "array",
 			"items": {
 				"$ref": "#/definitions/DepotInfo"
-			},
-			"additionalProperties": false
+			}
+		},
+		"rejectedChargingRequestInfoList": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/RejectedChargingRequestInfo"
+			}
 		}
 	},
 	"required": [
@@ -19,20 +24,39 @@
 	],
 	"additionalProperties": false,
 	"definitions": {
+		"RejectedChargingRequestInfo": {
+			"description": "This type represents information about charging requests rejected by a load management system.",
+			"type": "object",
+			"properties": {
+				"presystemId": {
+					"$ref": "#/definitions/UniqueIdentifier"
+				},
+				"chargingRequestId": {
+					"$ref": "#/definitions/UniqueIdentifier"
+				},
+				"reason": {
+					"description": "This type represents reason why the charging requests was rejected by the load management system.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"presystemId",
+				"chargingRequestId",
+				"reason"
+			],
+			"additionalProperties": false
+		},
 		"VehicleIdentifier": {
 			"description": "This type represents an unique vehicle identifier associated with VDV261.",
-			"type": "string",
-			"additionalProperties": false
+			"type": "string"
 		},
 		"EvccIdentifier": {
 			"description": "This type represents a mac address of electric vehicle communication controller associated with ISO 15118.",
-			"type": "string",
-			"additionalProperties": false
+			"type": "string"
 		},
 		"UniqueIdentifier": {
 			"description": "This type represents an unique identifier.",
-			"type": "string",
-			"additionalProperties": false
+			"type": "string"
 		},
 		"ChargingStationFaultInfo": {
 			"description": "This type represents error information regarding charging stations.",
@@ -42,13 +66,11 @@
 					"$ref": "#/definitions/ChargingStationFaultCode"
 				},
 				"faultText": {
-					"type": "string",
-					"additionalProperties": false
+					"type": "string"
 				},
 				"faultTimeStamp": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"format": "date-time"
 				}
 			},
 			"required": [
@@ -60,7 +82,6 @@
 		"ChargingStationFaultCode": {
 			"description": "This type represents error codes regarding faults at the charging station.",
 			"type": "string",
-			"additionalProperties": false,
 			"enum": [
 				"NoFaultKnown",
 				"UsageFailure",
@@ -72,20 +93,10 @@
 		},
 		"ChargingPointStatus": {
 			"type": "string",
-			"additionalProperties": false,
 			"enum": [
 				"Available",
 				"Occupied",
 				"Reserved",
-				"Unavailable",
-				"Faulted"
-			]
-		},
-		"ChargingStationStatus": {
-			"type": "string",
-			"additionalProperties": false,
-			"enum": [
-				"Available",
 				"Unavailable",
 				"Faulted"
 			]
@@ -98,13 +109,11 @@
 					"$ref": "#/definitions/ChargingPointFaultCode"
 				},
 				"faultText": {
-					"type": "string",
-					"additionalProperties": false
+					"type": "string"
 				},
 				"faultTimeStamp": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"format": "date-time"
 				}
 			},
 			"required": [
@@ -116,7 +125,6 @@
 		"ChargingPointFaultCode": {
 			"description": "This type represents error codes regarding faults at the charging point.",
 			"type": "string",
-			"additionalProperties": false,
 			"enum": [
 				"NoFaultKnown",
 				"UsageFailure",
@@ -126,7 +134,6 @@
 		},
 		"ProcessStatus": {
 			"type": "string",
-			"additionalProperties": false,
 			"enum": [
 				"Preparing",
 				"Charging",
@@ -143,28 +150,26 @@
 			"properties": {
 				"stateOfHealth": {
 					"type": "number",
+					"description": "Current state-of-health of traction battery in percent [%] regarding specified maximum capacity",
 					"minimum": 0,
-					"maximum": 100,
-					"additionalProperties": false
+					"maximum": 100
 				},
 				"stateOfCharge": {
 					"type": "number",
+					"description": "Current state-of-charge of traction battery in percent [%] regarding current maximum capacity",
 					"minimum": 0,
-					"maximum": 100,
-					"additionalProperties": false
+					"maximum": 100
 				},
 				"temperature": {
-					"type": "integer",
-					"additionalProperties": false
+					"type": "integer"
 				},
 				"batteryStatus": {
 					"description": "Condensed health status of the traction battery.",
 					"type": "string",
-					"additionalProperties": false,
-					"enum": [						
-							"OK",
-							"NOK", 
-							"NA"
+					"enum": [
+						"OK",
+						"NOK",
+						"NA"
 					]
 				}
 			},
@@ -177,55 +182,49 @@
 				"h2TankStatus": {
 					"description": "Condensed health status of the H2 tank.",
 					"type": "string",
-					"additionalProperties": false,
-					"enum": [						
-							"OK",
-							"NOK", 
-							"NA"
+					"enum": [
+						"OK",
+						"NOK",
+						"NA"
 					]
 				}
 			},
 			"additionalProperties": false
 		},
-
 		"VehicleStatusInfo": {
 			"description": "This type represents status information regarding a vehicle.",
 			"type": "object",
 			"properties": {
 				"conservationChargingActive": {
-					"type": "boolean",
-					"additionalProperties": false
+					"type": "boolean"
 				},
 				"systemPreconditioningActive": {
-					"type": "boolean",
-					"additionalProperties": false
+					"type": "boolean"
 				},
 				"hvacPreconditioningActive": {
-					"type": "boolean",
-					"additionalProperties": false
+					"type": "boolean"
 				},
 				"balancingActive": {
-					"type": "boolean",
-					"additionalProperties": false
+					"type": "boolean"
 				},
 				"fossilFlameControlActive": {
-					"type": "boolean",
-					"additionalProperties": false
+					"type": "boolean"
 				},
 				"batteryChargingVoltage": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Current charging voltage of 12/24V battery in [V]"
 				}
 			},
 			"additionalProperties": false
 		},
 		"VehicleChargingStatus": {
 			"type": "string",
-			"additionalProperties": false,
 			"enum": [
 				"ReadyToCharge",
 				"Charging",
 				"ChargingImpossible",
+				"ChargingAndPreconditioning",
+				"Preconditioning",
 				"Unknown"
 			]
 		},
@@ -237,13 +236,11 @@
 					"$ref": "#/definitions/VehicleFaultCode"
 				},
 				"faultText": {
-					"type": "string",
-					"additionalProperties": false
+					"type": "string"
 				},
 				"faultTimeStamp": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"format": "date-time"
 				}
 			},
 			"required": [
@@ -254,8 +251,7 @@
 		},
 		"VehicleFaultCode": {
 			"description": "This type represents error codes regarding faults at vehicles.",
-			"type": "string",
-			"additionalProperties": false
+			"type": "string"
 		},
 		"PreconditioningInfo": {
 			"description": "This type represents information regarding preconditioning according to VDV261.",
@@ -263,19 +259,19 @@
 			"properties": {
 				"hvBatteryPreconditioningTime": {
 					"type": "integer",
-					"additionalProperties": false
+					"description": "Required time in minutes for preconditioning high voltage battery."
 				},
 				"hvBatteryChargingEnergy": {
 					"type": "integer",
-					"additionalProperties": false
+					"description": "Required energy in [Wh] for charging high voltage battery (including energy for preconditioning purposes)."
 				},
 				"vehiclePreconditioningTime": {
 					"type": "integer",
-					"additionalProperties": false
+					"description": "Required time in minutes for preconditioning of vehicle."
 				},
 				"vehiclePreconditioningEnergy": {
 					"type": "integer",
-					"additionalProperties": false
+					"description": "Required energy in [Wh] for preconditioning of vehicle."
 				}
 			},
 			"additionalProperties": false
@@ -291,8 +287,7 @@
 					"$ref": "#/definitions/EvccIdentifier"
 				},
 				"mileage": {
-					"type": "integer",
-					"additionalProperties": false
+					"type": "integer"
 				},
 				"tractionBatteryInfo": {
 					"$ref": "#/definitions/TractionBatteryInfo"
@@ -327,24 +322,21 @@
 			"properties": {
 				"chargingCurrent": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Current charging current in [A]"
 				},
 				"chargingVoltage": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Current charging voltage in [V] (outgoing in direction of vehicle)"
 				},
 				"chargingPower": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Current charging power in [kW]"
 				},
 				"reactivePower": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Current reactive power in [kvar]"
 				}
 			},
-			"required": [
-				"chargingPower"
-			],
 			"additionalProperties": false
 		},
 		"ChargingProcessInfo": {
@@ -365,8 +357,7 @@
 				},
 				"startTime": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"format": "date-time"
 				},
 				"chargingPredictionData": {
 					"$ref": "#/definitions/ChargingPredictionData"
@@ -376,7 +367,7 @@
 				},
 				"deliveredEnergy": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Delivered energy during charging process in [Wh] (for statistical purposes only)"
 				}
 			},
 			"required": [
@@ -388,58 +379,79 @@
 			],
 			"additionalProperties": false
 		},
+		"ChargingPredictionDataStatus": {
+			"description": "This type represents information regarding the status of a charging process forecast.",
+			"type": "string",
+			"enum": [
+				"Ongoing",
+				"Finished"
+			]
+		},
 		"ChargingPredictionData": {
 			"description": "This type represents information regarding a charging process forecast.",
 			"type": "object",
 			"properties": {
-				"chargingPredictionDataMinSoc": {
-					"$ref": "#/definitions/ChargingPredictionDataMinSoc"
+				"chargingPredictionDataStatus": {
+					"$ref": "#/definitions/ChargingPredictionDataStatus"
 				},
-				"chargingPredictionDataFinalSoc": {
-					"$ref": "#/definitions/ChargingPredictionDataFinalSoc"
+				"chargingPredictionDataMinTargetSoc": {
+					"$ref": "#/definitions/ChargingPredictionDataMinTargetSoc"
+				},
+				"chargingPredictionDataMaxTargetSoc": {
+					"$ref": "#/definitions/ChargingPredictionDataMaxTargetSoc"
 				},
 				"chargingPredictionDataDepartureTime": {
 					"$ref": "#/definitions/ChargingPredictionDataDepartureTime"
+				},
+				"chargingProgressPredictionList": {
+					"$ref": "#/definitions/ChargingProgressPredictionList"
 				}
 			},
+			"required": [
+				"chargingPredictionDataStatus"
+			],
 			"additionalProperties": false
 		},
-		"ChargingPredictionDataMinSoc": {
+		"ChargingPredictionDataMinTargetSoc": {
 			"description": "This type represents information regarding a charging process time forecast given a fix minimum state of charge.",
 			"type": "object",
 			"properties": {
-				"requestedMinSoc": {
+				"requestedMinTargetSoc": {
 					"type": "number",
-					"additionalProperties": false
+					"minimum": 0,
+					"maximum": 100,
+					"description": "Requested minimal state-of-charge in [%] that was provided by the presystem to be reached at minimum."
 				},
 				"predictedTime": {
 					"type": "string",
 					"format": "date-time",
-					"additionalProperties": false
+					"description": "Predicted time to reach the minimal state-of-charge."
 				}
 			},
 			"required": [
-				"requestedMinSoc",
+				"requestedMinTargetSoc",
 				"predictedTime"
 			],
 			"additionalProperties": false
 		},
-		"ChargingPredictionDataFinalSoc": {
+		"ChargingPredictionDataMaxTargetSoc": {
 			"description": "This type represents information regarding a charging process time forecast given a fix maximum state of charge.",
 			"type": "object",
 			"properties": {
-				"predictedFinalSoc": {
+				"requestedMaxTargetSoc": {
 					"type": "number",
-					"additionalProperties": false
+					"minimum": 0,
+					"maximum": 100,
+					"description": "Predicted maximum state-of-charge in [%] that was provided by the presystem to be reached at maximum."
 				},
 				"predictedTime": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"description": "Predicted time to reach the maximum state-of-charge.",
+					"format": "date-time"
 				}
 			},
 			"required": [
-				"predictedFinalSoc",
+				"requestedMaxTargetSoc",
 				"predictedTime"
 			],
 			"additionalProperties": false
@@ -450,18 +462,49 @@
 			"properties": {
 				"predictedDepartureTimeSoc": {
 					"type": "number",
-					"additionalProperties": false
+					"minimum": 0,
+					"maximum": 100,
+					"description": "State-of-charge in [%] that was predicted by the LMS at the requestedTimeForDeparture provided by the presystem."
 				},
-				"predictedTime": {
+				"requestedTimeForDeparture": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"description": "The requestedTimeForDeparture provided by the presystem.",
+					"format": "date-time"
 				}
 			},
 			"required": [
 				"predictedDepartureTimeSoc",
-				"predictedTime"
+				"requestedTimeForDeparture"
 			]
+		},
+		"ChargingProgressPredictionList": {
+			"description": "This type represents a time series for predicting the charging process (internal extrapolation).",
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/ChargingProgressPredictionListEntry"
+			}
+		},
+		"ChargingProgressPredictionListEntry": {
+			"description": "This type represents a single prediction data point for the charging process forecast.",
+			"type": "object",
+			"properties": {
+				"predictedSoc": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 100,
+					"description": "Predicted state of charge in percent (0-100)."
+				},
+				"predictedTime": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Timestamp when the predicted SoC is expected to be reached."
+				}
+			},
+			"required": [
+				"predictedSoc",
+				"predictedTime"
+			],
+			"additionalProperties": false
 		},
 		"ChargingPointInfo": {
 			"type": "object",
@@ -474,23 +517,22 @@
 				},
 				"insideTemperature": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Temperature inside charging equipment in [°C]"
 				},
 				"outsideTemperature": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Temperature outside charging equipment in [°C]"
 				},
 				"connectorTemperature": {
-					"type": "number",
-					"additionalProperties": false
+					"type": "number"
 				},
-				"presentPower": {
+				"presentPowerLimit": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Optional power limit in [kW] currently set by the LMS."
 				},
 				"energyMeterReading": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Energy meter reading in [Wh]"
 				},
 				"chargingPointFaultInfo": {
 					"$ref": "#/definitions/ChargingPointFaultInfo"
@@ -505,8 +547,7 @@
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/ScheduledChargingProcess"
-					},
-					"additionalProperties": false
+					}
 				}
 			},
 			"required": [
@@ -533,8 +574,7 @@
 				},
 				"startTime": {
 					"type": "string",
-					"format": "date-time",
-					"additionalProperties": false
+					"format": "date-time"
 				},
 				"chargingPredictionData": {
 					"$ref": "#/definitions/ChargingPredictionData"
@@ -556,15 +596,13 @@
 				},
 				"name": {
 					"description": "This type represents name of the depot.",
-					"type": "string",
-					"additionalProperties": false
+					"type": "string"
 				},
 				"chargingStationInfoList": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/ChargingStationInfo"
-					},
-					"additionalProperties": false
+					}
 				}
 			},
 			"required": [
@@ -579,27 +617,22 @@
 				"chargingStationId": {
 					"$ref": "#/definitions/UniqueIdentifier"
 				},
-				"chargingStationStatus": {
-					"$ref": "#/definitions/ChargingStationStatus"
-				},
 				"chargingPointInfoList": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/ChargingPointInfo"
-					},
-					"additionalProperties": false
+					}
 				},
 				"chargingStationFaultInfo": {
 					"$ref": "#/definitions/ChargingStationFaultInfo"
 				},
 				"totalPower": {
 					"type": "number",
-					"additionalProperties": false
+					"description": "Actual power in [kW] drawn from the grid"
 				}
 			},
 			"required": [
 				"chargingStationId",
-				"chargingStationStatus",
 				"chargingPointInfoList"
 			],
 			"additionalProperties": false
